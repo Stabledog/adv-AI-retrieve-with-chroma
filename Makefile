@@ -6,13 +6,24 @@ SHELL=/bin/bash
 MAKEFLAGS += --no-builtin-rules --no-print-directory
 
 absdir := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+Python = .conda/bin/python3
 
+Flag = $(absdir).flag
 
-setup:
+setup: $(Flag)/init $(Python)
+$(Flag)/init:
+	mkdir -p $(@D)
+
+$(Python):
+	@echo "Install python3.11 manually using conda and the vscode Select Kernel button"
+
+setup: $(Python) $(Flag)/setup
+$(Flag)/setup:
 	@
-	python3.11 -m pip  install  \
+	$(Python) -m pip  install  \
 		pypdf \
 		langchain \
 		chromadb \
 		openai \
 		sentence-transformers
+	touch $@
