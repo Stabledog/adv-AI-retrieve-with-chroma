@@ -20,6 +20,7 @@ $(Python):
 setup: $(Python) $(Flag)/setup
 $(Flag)/setup:
 	@
+	conda install -y -c conda-forge tqdm
 	$(Python) -m pip  install  \
 		pypdf \
 		langchain \
